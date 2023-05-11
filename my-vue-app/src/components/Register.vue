@@ -14,39 +14,43 @@
                         <h4 class="mt-1 mb-5 pb-1">We are The Lotus Team</h4>
                         </div>
 
-                        <form>
+                        <form @submit.prevent="submit">
                         <p>Please register to your account</p>
-
+                        
+                        <div style="color:red" v-if="errors.name">{{ errors.name[0] }}</div>
                         <div class="form-outline mb-4">
-                            <input type="email" id="form2Example11" class="form-control"
-                            placeholder="Phone number or email address" />
+                            <input type="text" v-model="form.name" id="form2Example11" class="form-control"
+                            placeholder="Enter Your Name" />
                             <label class="form-label" for="form2Example11">Name</label>
                         </div>
+
+                        <div style="color:red" v-if="errors.email">{{ errors.email[0] }}</div>
                         <div class="form-outline mb-4">
-                            <input type="email" id="form2Example11" class="form-control"
+                            <input type="email" v-model="form.email" id="form2Example11" class="form-control"
                             placeholder="Phone number or email address" />
                             <label class="form-label" for="form2Example11">Email</label>
                         </div>
 
+                        <div style="color:red" v-if="errors.password">{{ errors.password[0] }}</div>
                         <div class="form-outline mb-4">
-                            <input type="password" id="form2Example22" class="form-control" />
+                            <input type="password" v-model="form.password" id="form2Example22" class="form-control" />
                             <label class="form-label" for="form2Example22">Password</label>
                         </div>
 
+                        <div style="color:red" v-if="errors.password_confirmation">{{ errors.password_confirmation[0] }}</div>
                         <div class="form-outline mb-4">
-                            <input type="password" id="form2Example22" class="form-control" />
+                            <input type="password" v-model="form.password_confirmation" id="form2Example22" class="form-control" />
                             <label class="form-label" for="form2Example22">Confirm Password</label>
                         </div>
 
                         <div class="text-center pt-1 mb-5 pb-1">
-                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">Log
-                            in</button>
+                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Sign up</button>
                             <a class="text-muted" href="#!">Forgot password?</a>
                         </div>
 
                         <div class="d-flex align-items-center justify-content-center pb-4">
-                            <p class="mb-0 me-2">Don't have an account?</p>
-                            <button type="button" class="btn btn-outline-danger">Create new</button>
+                            <p class="mb-0 me-2">Already have an account?</p>
+                            <router-link :to="{name:'login'}" type="button" class="btn btn-outline-danger">Login</router-link>
                         </div>
 
                         </form>
@@ -69,11 +73,35 @@
     </section>
 </template>
 
-<script setup>
-// export default {
+<script>
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
+export default {
+    setup(){
+        const store = useStore()
+        const errors = computed(() => store.state.authentication.authRegisterErrors)
 
-// }
+        const form = ref({
+            name: '',
+            Email: '',
+            password: '',
+            password_confirmation: ''
+        });
+
+        const submit = () => {
+            store.dispatch('authentication/handleRegister', form);
+        }
+
+        return {
+            form,
+            submit,
+            errors
+        }
+    }
+}
 </script>
+
+
 <style scoped>
 .gradient-custom-2 {
 /* fallback for old browsers */

@@ -1,30 +1,39 @@
 <template>
     <main class="h-100 gradient-form" style="background-color: #eee;">
-        <h1 class="visually-hidden">Heroes examples</h1>
-        <div class="px-4 py-5 my-5 text-center">
-            <img class="d-block mx-auto mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-            <h1 class="display-5 fw-bold text-body-emphasis">Centered hero</h1>
-            <div class="col-lg-6 mx-auto">
-            <p class="lead mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Primary button</button>
-                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>
-            </div>
+        <div class="container px-4 py-5" id="hanging-icons">
+            <h1 class="visually-hidden">Heroes examples</h1>
+            <div class="px-4 py-5 my-5 text-center">
+                <img class="d-block mx-auto mb-4" src="data:image/jpeg;base64,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" alt="" width="150" height="150">
+                <h1 class="display-5 fw-bold text-body-emphasis">Centered hero</h1>
+                <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Primary button</button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>
+                </div>
+                </div>
             </div>
         </div>
     </main>
 </template>
 
 <script>
-import { onMounted } from 'vue';
-import axios from 'axios';
+import { onMounted, computed } from 'vue';
+import { useStore } from 'vuex';
+
 
 export default {
-    setup(props) {
-
-        onMounted(async () => {
-           const user = await axios.get('/api/user').then((res) => console.log(res));
+    
+    setup() {
+        const store = useStore()
+        const user = computed(() => store.state.authentication.authUser);
+        onMounted(() => {
+            store.dispatch('authentication/getUser')
         })
+
+        return {
+            user
+        }
     }
 }
 

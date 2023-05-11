@@ -14,29 +14,31 @@
                         <h4 class="mt-1 mb-5 pb-1">We are The Lotus Team</h4>
                         </div>
 
-                        <form>
+                        <form @submit.prevent="submit">
                         <p>Please login to your account</p>
 
+                        <div style="color:red" v-if="errors.email">{{ errors.email[0] }}</div>
                         <div class="form-outline mb-4">
                             <input type="email" v-model="form.email" id="form2Example11" class="form-control"
                             placeholder="Phone number or email address" />
                             <label class="form-label" for="form2Example11">Email</label>
                         </div>
 
+                        <div style="color:red" v-if="errors.password">{{ errors.password[0] }}</div>
                         <div class="form-outline mb-4">
                             <input type="password" v-model="form.password" id="form2Example22" class="form-control" />
                             <label class="form-label" for="form2Example22">Password</label>
                         </div>
 
                         <div class="text-center pt-1 mb-5 pb-1">
-                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">Log
+                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Log
                             in</button>
                             <a class="text-muted" href="#!">Forgot password?</a>
                         </div>
 
                         <div class="d-flex align-items-center justify-content-center pb-4">
                             <p class="mb-0 me-2">Don't have an account?</p>
-                            <button type="button" class="btn btn-outline-danger">Create new</button>
+                            <router-link :to="{name:'register'}" type="button" class="btn btn-outline-danger">Create new</router-link>
                         </div>
 
                         </form>
@@ -60,17 +62,27 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
     setup(props) {
-        const form = reactive({
-            email: '',
-            password: ''
+        const store = useStore()
+        const errors = computed(() => store.state.authentication.authLoginErrors)
+
+        const form = ref({
+            email: 'test@gmail.com',
+            password: '1'
         })
-        console.log(form)
+
+        const submit = async () => {
+            store.dispatch('authentication/handleLogin', form);
+        }
+
         return{
-            form
+            form,
+            submit,
+            errors
         }
     }
 }
